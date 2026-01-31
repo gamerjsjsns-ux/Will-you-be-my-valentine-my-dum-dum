@@ -36,9 +36,12 @@
             margin: 10px 0 20px 0;
         }
 
-        .gif_container img, .gif_container video {
+        /* Fixed image size so it doesn't jump around */
+        .gif_container img {
             width: 100%;
             max-width: 250px;
+            height: 250px; /* Fixed height for consistency */
+            object-fit: contain; /* Keeps the GIF proportional */
             border-radius: 15px;
             margin-bottom: 20px;
         }
@@ -60,6 +63,9 @@
             transition: all 0.2s ease;
             font-family: 'Quicksand', sans-serif;
             font-weight: 700;
+            white-space: normal; 
+            max-width: 90%;
+            word-wrap: break-word;
         }
 
         #yesBtn {
@@ -83,7 +89,7 @@
 
     <div class="container" id="question-screen">
         <div class="gif_container">
-            <img id="mainGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3B6eG81eWx4bnh4bnh4bnh4bnh4bnh4bnh4bnh4bn/26BRv0ThflsKCqlx6/giphy.gif" alt="Cute bear">
+            <img id="mainGif" src="1.gif" alt="Cute cat">
         </div>
         
         <h1 class="header_text">Will you be my Valentine?</h1>
@@ -97,7 +103,7 @@
     <div class="container" id="success-screen">
         <h1 class="header_text">Yay! I knew it! ❤️</h1>
         <div class="gif_container">
-            <video src="video.mp4" autoplay loop muted playsinline></video>
+            <img src="4.gif" alt="Celebration" style="width: 100%; max-width: 300px;">
         </div>
     </div>
 
@@ -106,29 +112,38 @@
         const noBtn = document.getElementById("noBtn");
         const mainGif = document.getElementById("mainGif");
 
+        // YOUR CUSTOM MESSAGES
         const messages = [
-            "Are you sure?", "Really sure??", "Pookie please...",
-            "Don't do this to me :(", "I'm gonna cry...",
-            "You're breaking my heart!", "Please please please...",
-            "Just kidding, SAY YES! ❤️"
+            "I know your no means yes",
+            "Are you sure?",
+            "Babyyyyy 😭",
+            "Don't say nooo, my bachaaaa",
+            "Please please please",
+            "My dum dum, gonna cry now ☹️",
+            "Sayyyy sayyy yesssss",
+            "If you wanted me to crash the bike into a tree, you could have just said that instead of saying no 😞"
         ];
 
-        // NEW RELIABLE LINKS (Sad Bears)
+        // THE GIFS TO CYCLE THROUGH
         const gifs = [
-            "https://media.giphy.com/media/d2lcHJTG5Tscg/giphy.gif",       // Sad 1
-            "https://media.giphy.com/media/7SF5scGB2AFrgsXP63/giphy.gif",  // Crying
-            "https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif",       // Crying harder
-            "https://media.giphy.com/media/l2JhrYYxAD6N5gbkI/giphy.gif"    // Depressed
+            "1.gif",
+            "2.gif",
+            "3.gif"
         ];
 
         let messageIndex = 0;
         let currentSize = 1.2; 
 
         function moveButton() {
+            // 1. Change Text
             noBtn.innerText = messages[messageIndex % messages.length];
-            const gifIndex = Math.min(messageIndex, gifs.length - 1);
+            
+            // 2. Change GIF (Cycle through 1, 2, 3)
+            // It will go 2 -> 3 -> 1 -> 2 ...
+            const gifIndex = (messageIndex + 1) % gifs.length;
             mainGif.src = gifs[gifIndex];
             
+            // 3. Make Yes button bigger
             currentSize = currentSize * 1.5; 
             yesBtn.style.fontSize = `${currentSize}rem`;
             messageIndex++;
