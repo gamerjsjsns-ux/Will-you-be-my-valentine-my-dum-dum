@@ -4,56 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Valentine ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* BASE STYLES */
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Changed to min-height for scrolling */
+            min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #ffe6e9 0%, #ffc6d0 100%);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
             font-family: 'Quicksand', sans-serif;
-            overflow-y: auto; /* ALLOWS SCROLLING on mobile */
-            padding: 20px; /* Adds space on edges */
+            overflow-y: auto; /* Allows scrolling if needed */
         }
 
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(255, 107, 129, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             max-width: 90%;
             width: 400px;
             position: relative;
-            z-index: 10;
-            margin: auto; /* Centers it even when scrolling */
+            margin: auto;
         }
 
-        .header_text {
-            font-family: 'Sacramento', cursive;
-            font-size: 3rem;
-            color: #ff4757;
-            margin: 10px 0 20px 0;
+        h1 {
+            font-family: 'Indie Flower', cursive;
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
 
+        /* GIF IMAGES */
         .gif_container img {
             width: 100%;
             max-width: 250px;
             height: 250px;
             object-fit: contain;
             border-radius: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
+        /* BUTTONS */
         .btn-container {
             display: flex;
             justify-content: center;
             gap: 15px;
             flex-wrap: wrap; 
             margin-top: 20px;
-            align-items: center; /* Keeps buttons aligned */
+            align-items: center;
         }
 
         .btn {
@@ -68,22 +70,79 @@
         }
 
         #yesBtn {
-            background-color: #ff4757; 
+            background-color: #28a745; /* Green like the video */
             color: white;
-            z-index: 10;
-            white-space: nowrap; /* FIX: Prevents "Yes" from breaking vertically */
+            white-space: nowrap;
         }
 
         #noBtn {
-            background-color: #ffffff; 
-            color: #ff4757;
-            border: 2px solid #ff4757;
-            white-space: normal; /* Allows long jokes to wrap */
-            max-width: 150px; /* Prevents it from getting too wide */
+            background-color: #dc3545; /* Red like the video */
+            color: white;
+            white-space: normal;
+            max-width: 150px;
         }
 
-        #success-screen {
-            display: none; 
+        /* GIFT BOXES GRID */
+        .gift-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gift-box {
+            background: #ffecf0;
+            border: 2px solid #ffb6c1;
+            border-radius: 15px;
+            padding: 15px 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .gift-box:active {
+            transform: scale(0.95);
+        }
+
+        .gift-box span {
+            font-size: 2rem;
+            display: block;
+        }
+
+        .gift-box p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #d63384;
+        }
+
+        /* NAVIGATION & HIDDEN SCREENS */
+        .hidden {
+            display: none;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            background-color: #6c757d;
+            color: white;
+        }
+
+        /* GIFT CONTENT STYLES */
+        .gift-content img, .gift-content video {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .letter {
+            text-align: left;
+            background: #fff;
+            padding: 20px;
+            border: 1px dashed #d63384;
+            border-radius: 10px;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -93,23 +152,68 @@
         <div class="gif_container">
             <img id="mainGif" src="1.gif" alt="Cute cat">
         </div>
-        
-        <h1 class="header_text">Will you be my Valentine?</h1>
-        
+        <h1>Will you be my Valentine?</h1>
         <div class="btn-container">
             <button class="btn" id="yesBtn" onclick="nextPage()">Yes</button>
             <button class="btn" id="noBtn" onclick="moveButton()">No</button>
         </div>
     </div>
 
-    <div class="container" id="success-screen">
-        <h1 class="header_text">Yay! I knew it! ❤️</h1>
+    <div class="container hidden" id="menu-screen">
         <div class="gif_container">
-            <img src="4.gif" alt="Celebration" style="width: 100%; max-width: 300px;">
+            <img src="4.gif" alt="Celebration">
+        </div>
+        <h1>Yay, you said yes! ❤️</h1>
+        <p>I made these for you babe:</p>
+        
+        <div class="gift-grid">
+            <div class="gift-box" onclick="openGift(1)">
+                <span>🌹</span>
+                <p>Gift 1</p>
+            </div>
+            <div class="gift-box" onclick="openGift(2)">
+                <span>💌</span>
+                <p>Gift 2</p>
+            </div>
+            <div class="gift-box" onclick="openGift(3)">
+                <span>📹</span>
+                <p>Gift 3</p>
+            </div>
         </div>
     </div>
 
+    <div class="container hidden" id="gift1-screen">
+        <h1>Your Rose Bouquet 🌹</h1>
+        <div class="gift-content">
+            <img src="https://media.giphy.com/media/26BRv0ThflsKCqlx6/giphy.gif" alt="Roses">
+            <p>You will forever be my only option. ❤️</p>
+            <p>You are the best part of my life.</p>
+        </div>
+        <button class="btn back-btn" onclick="showMenu()">Back to Gifts</button>
+    </div>
+
+    <div class="container hidden" id="gift2-screen">
+        <h1>Words from my Heart 💌</h1>
+        <div class="letter">
+            <p>To the love of my life,</p>
+            <p>You make my life so meaningful and I am so lucky to have you. I love you wholeheartedly and I can't wait to continue loving you for the rest of our lives.</p>
+            <p>I know I tell you this everyday but you are literally the most beautiful girl I know.</p>
+            <p>Anyways, I love you. Always, Forever.</p>
+            <p style="text-align: right;">- Yours</p>
+        </div>
+        <button class="btn back-btn" onclick="showMenu()">Back to Gifts</button>
+    </div>
+
+    <div class="container hidden" id="gift3-screen">
+        <h1>A Video for You 🎬</h1>
+        <div class="gift-content">
+            <video src="video.mp4" controls style="width: 100%; border-radius: 10px;"></video>
+        </div>
+        <button class="btn back-btn" onclick="showMenu()">Back to Gifts</button>
+    </div>
+
     <script>
+        // VARIABLES
         const yesBtn = document.getElementById("yesBtn");
         const noBtn = document.getElementById("noBtn");
         const mainGif = document.getElementById("mainGif");
@@ -125,30 +229,43 @@
             "If you wanted me to crash the bike into a tree, you could have just said that instead of saying no 😞"
         ];
 
-        const gifs = [
-            "1.gif",
-            "2.gif",
-            "3.gif"
-        ];
-
+        const gifs = ["1.gif", "2.gif", "3.gif"];
         let messageIndex = 0;
-        let currentSize = 1.2; 
+        let currentSize = 1;
 
+        // GAME LOGIC
         function moveButton() {
             noBtn.innerText = messages[messageIndex % messages.length];
             const gifIndex = (messageIndex + 1) % gifs.length;
             mainGif.src = gifs[gifIndex];
             
-            // Slower growth (1.3 instead of 1.5) so it doesn't break phone screens instantly
-            currentSize = currentSize * 1.3; 
-            yesBtn.style.fontSize = `${currentSize}rem`;
+            // Grow Yes button
+            currentSize += 0.4;
+            yesBtn.style.transform = `scale(${currentSize})`;
             
             messageIndex++;
         }
 
+        // NAVIGATION FUNCTIONS
         function nextPage() {
-            document.getElementById("question-screen").style.display = "none";
-            document.getElementById("success-screen").style.display = "block";
+            document.getElementById("question-screen").classList.add("hidden");
+            document.getElementById("menu-screen").classList.remove("hidden");
+        }
+
+        function showMenu() {
+            // Hide all gifts
+            document.getElementById("gift1-screen").classList.add("hidden");
+            document.getElementById("gift2-screen").classList.add("hidden");
+            document.getElementById("gift3-screen").classList.add("hidden");
+            // Show menu
+            document.getElementById("menu-screen").classList.remove("hidden");
+        }
+
+        function openGift(giftNumber) {
+            document.getElementById("menu-screen").classList.add("hidden");
+            if(giftNumber === 1) document.getElementById("gift1-screen").classList.remove("hidden");
+            if(giftNumber === 2) document.getElementById("gift2-screen").classList.remove("hidden");
+            if(giftNumber === 3) document.getElementById("gift3-screen").classList.remove("hidden");
         }
     </script>
 </body>
